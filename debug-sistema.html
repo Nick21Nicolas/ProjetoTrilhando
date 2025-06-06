@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Sistema de Destinos e Roteiro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: white;
+            border-bottom: 3px solid #667eea;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .content {
+            display: none;
+            padding: 30px;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .debug-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .debug-title {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .debug-content {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .roteiro-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .roteiro-item:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .roteiro-numero {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .roteiro-info {
+            flex: 1;
+        }
+
+        .roteiro-nome {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .roteiro-detalhes {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-remove:hover {
+            background: #c82333;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ Sistema de Destinos e Roteiro - Debug</h1>
+            <p>Teste e debug do sistema de armazenamento local</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('adicionar')">➕ Adicionar Destino</button>
+            <button class="tab" onclick="switchTab('destinos')">🏖️ Ver Destinos</button>
+            <button class="tab" onclick="switchTab('roteiro')">📋 Meu Roteiro</button>
+            <button class="tab" onclick="switchTab('debug')">🔍 Debug</button>
+        </div>
+
+        <!-- Adicionar Destino -->
+        <div id="adicionar" class="content active">
+            <h2>Adicionar Novo Destino</h2>
+            <form id="form-destino">
+                <div class="form-group">
+                    <label for="nome">Nome do Local</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Ex: Praia de Copacabana">
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado" required>
+                        <option value="">Selecione um estado</option>
+                        <option value="Rio de Janeiro">Rio de Janeiro</option>
+                        <option value="São Paulo">São Paulo</option>
+                        <option value="Bahia">Bahia</option>
+                        <option value="Minas Gerais">Minas Gerais</option>
+                        <option value="Santa Catarina">Santa Catarina</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">Tipo de Lugar</label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Selecione um tipo</option>
+                        <option value="Praia">Praia</option>
+                        <option value="Montanha">Montanha</option>
+                        <option value="Cidade Histórica">Cidade Histórica</option>
+                        <option value="Parque Nacional">Parque Nacional</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="nota">Nota (1 a 5)</label>
+                    <input type="range" id="nota" name="nota" min="1" max="5" step="0.5" value="5" oninput="updateNotaDisplay()">
+                    <span id="nota-valor">5.0</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" rows="3" required placeholder="Descreva o destino..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="custo">Custo Estimado (R$)</label>
+                    <input type="number" id="custo" name="custo" min="0" step="0.01" required placeholder="1500.00">
+                </div>
+
+                <button type="submit" class="btn btn-primary">➕ Adicionar Destino</button>
+            </form>
+        </div>
+
+        <!-- Ver Destinos -->
+        <div id="destinos" class="content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Destinos Cadastrados</h2>
+                <button class="btn btn-secondary" onclick="clearAllDestinos()">🗑️ Limpar Todos</button>
+            </div>
+            <div id="destinos-list"></div>
+        </div>
+
+        <!-- Roteiro -->
+        <div id="roteiro" class="content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Meu Roteiro de Viagem</h2>
+                <button class="btn btn-secondary" onclick="clearRoteiro()">🗑️ Limpar Roteiro</button>
+            </div>
+            <div id="roteiro-list"></div>
+        </div>
+
+        <!-- Debug -->
+        <div id="debug" class="content">
+            <h2>Debug do Sistema</h2>
+            <div class="debug-section">
+                <div class="debug-title">📊 Estado atual do localStorage:</div>
+                <div class="debug-content" id="debug-localStorage"></div>
+            </div>
+            <div class="debug-section">
+                <div class="debug-title">🎯 Destinos armazenados:</div>
+                <div class="debug-content" id="debug-destinos"></div>
+            </div>
+            <div class="debug-section">
+                <div class="debug-title">📋 Roteiro armazenado:</div>
+                <div class="debug-content" id="debug-roteiro"></div>
+            </div>
+            <button class="btn btn-secondary" onclick="updateDebugInfo()">🔄 Atualizar Debug</button>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais para armazenar dados
+        let destinos = [];
+        let roteiro = [];
+
+        // Funções de armazenamento
+        function saveDestinos() {
+            // Simula localStorage - em produção use localStorage.setItem('destinos', JSON.stringify(destinos))
+            console.log('Salvando destinos:', destinos);
+        }
+
+        function loadDestinos() {
+            // Simula localStorage - em produção use JSON.parse(localStorage.getItem('destinos') || '[]')
+            console.log('Carregando destinos:', destinos);
+            return destinos;
+        }
+
+        function saveRoteiro() {
+            // Simula localStorage - em produção use localStorage.setItem('roteiro', JSON.stringify(roteiro))
+            console.log('Salvando roteiro:', roteiro);
+        }
+
+        function loadRoteiro() {
+            // Simula localStorage - em produção use JSON.parse(localStorage.getItem('roteiro') || '[]')
+            console.log('Carregando roteiro:', roteiro);
+            return roteiro;
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            destinos = loadDestinos();
+            roteiro = loadRoteiro();
+            updateAllDisplays();
+            updateDebugInfo();
+        });
+
+        // Função para trocar abas
+        function switchTab(tabName) {
+            // Remove active de todas as abas e conteúdos
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
+            
+            // Adiciona active na aba e conteúdo selecionados
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+            
+            // Atualiza displays quando necessário
+            if (tabName === 'destinos') {
+                displayDestinos();
+            } else if (tabName === 'roteiro') {
+                displayRoteiro();
+            } else if (tabName === 'debug') {
+                updateDebugInfo();
+            }
+        }
+
+        // Função para atualizar display da nota
+        function updateNotaDisplay() {
+            const nota = document.getElementById('nota').value;
+            document.getElementById('nota-valor').textContent = parseFloat(nota).toFixed(1);
+        }
+
+        // Função para adicionar destino
+        document.getElementById('form-destino').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const novoDestino = {
+                id: Date.now(), // ID único baseado em timestamp
+                nome: formData.get('nome'),
+                estado: formData.get('estado'),
+                tipo: formData.get('tipo'),
+                nota: parseFloat(formData.get('nota')),
+                descricao: formData.get('descricao'),
+                custo: parseFloat(formData.get('custo'))
+            };
+            
+            destinos.push(novoDestino);
+            saveDestinos();
+            
+            showNotification('Destino adicionado com sucesso!', 'success');
+            e.target.reset();
+            document.getElementById('nota-valor').textContent = '5.0';
+            
+            updateAllDisplays();
+        });
+
+        // Função para exibir destinos
+        function displayDestinos() {
+            const container = document.getElementById('destinos-list');
+            
+            if (destinos.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i>🏖️</i>
+                        <h3>Nenhum destino cadastrado</h3>
+                        <p>Adicione alguns destinos para começar a planejar sua viagem!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = destinos.map(destino => `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>${destino.nome}</h3>
+                        <p>${destino.estado} • ${destino.tipo}</p>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Descrição:</strong> ${destino.descricao}</p>
+                        <p><strong>Nota:</strong> ${'⭐'.repeat(Math.floor(destino.nota))} (${destino.nota})</p>
+                        <p><strong>Custo:</strong> R$ ${destino.custo.toFixed(2)}</p>
+                        <div style="margin-top: 15px;">
+                            <button class="btn btn-primary" onclick="addToRoteiro(${destino.id})">
+                                ➕ Adicionar ao Roteiro
+                            </button>
+                            <button class="btn btn-secondary" onclick="removeDestino(${destino.id})">
+                                🗑️ Remover
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Função para adicionar ao roteiro
+        function addToRoteiro(destinoId) {
+            const destino = destinos.find(d => d.id === destinoId);
+            if (!destino) {
+                showNotification('Destino não encontrado!', 'error');
+                return;
+            }
+            
+            // Verifica se já está no roteiro
+            if (roteiro.find(r => r.id === destinoId)) {
+                showNotification('Este destino já está no seu roteiro!', 'error');
+                return;
+            }
+            
+            roteiro.push({...destino, ordemRoteiro: roteiro.length + 1});
+            saveRoteiro();
+            
+            showNotification('Destino adicionado ao roteiro!', 'success');
+            updateAllDisplays();
+        }
+
+        // Função para exibir roteiro
+        function displayRoteiro() {
+            const container = document.getElementById('roteiro-list');
+            
+            if (roteiro.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i>📋</i>
+                        <h3>Seu roteiro está vazio</h3>
+                        <p>Adicione destinos ao seu roteiro para começar a planejar sua viagem!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const custoTotal = roteiro.reduce((total, item) => total + item.custo, 0);
+            
+            container.innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📊 Resumo do Roteiro</h3>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Total de destinos:</strong> ${roteiro.length}</p>
+                        <p><strong>Custo total estimado:</strong> R$ ${custoTotal.toFixed(2)}</p>
+                    </div>
+                </div>
+                
+                ${roteiro.map((item, index) => `
+                    <div class="roteiro-item">
+                        <div class="roteiro-numero">${index + 1}</div>
+                        <div class="roteiro-info">
+                            <div class="roteiro-nome">${item.nome}</div>
+                            <div class="roteiro-detalhes">
+                                ${item.estado} • ${item.tipo} • R$ ${item.custo.toFixed(2)} • ⭐ ${item.nota}
+                            </div>
+                        </div>
+                        <button class="btn-remove" onclick="removeFromRoteiro(${item.id})">
+                            🗑️ Remover
+                        </button>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        // Função para remover do roteiro
+        function removeFromRoteiro(destinoId) {
+            roteiro = roteiro.filter(item => item.id !== destinoId);
+            saveRoteiro();
+            showNotification('Destino removido do roteiro!', 'success');
+            updateAllDisplays();
+        }
+
+        // Função para remover destino
+        function removeDestino(destinoId) {
+            destinos = destinos.filter(d => d.id !== destinoId);
+            roteiro = roteiro.filter(r => r.id !== destinoId);
+            saveDestinos();
+            saveRoteiro();
+            showNotification('Destino removido!', 'success');
+            updateAllDisplays();
+        }
+
+        // Função para limpar todos os destinos
+        function clearAllDestinos() {
+            if (confirm('Tem certeza que deseja remover todos os destinos?')) {
+                destinos = [];
+                roteiro = [];
+                saveDestinos();
+                saveRoteiro();
+                showNotification('Todos os destinos foram removidos!', 'success');
+                updateAllDisplays();
+            }
+        }
+
+        // Função para limpar roteiro
+        function clearRoteiro() {
+            if (confirm('Tem certeza que deseja limpar o roteiro?')) {
+                roteiro = [];
+                saveRoteiro();
+                showNotification('Roteiro limpo!', 'success');
+                updateAllDisplays();
+            }
+        }
+
+        // Função para atualizar todos os displays
+        function updateAllDisplays() {
+            displayDestinos();
+            displayRoteiro();
+            updateDebugInfo();
+        }
+
+        // Função para atualizar informações de debug
+        function updateDebugInfo() {
+            document.getElementById('debug-localStorage').innerHTML = `
+                Chaves no armazenamento: destinos, roteiro<br>
+                Status: ✅ Funcionando
+            `;
+            
+            document.getElementById('debug-destinos').innerHTML = `
+                <pre>${JSON.stringify(destinos, null, 2)}</pre>
+            `;
+            
+            document.getElementById('debug-roteiro').innerHTML = `
+                <pre>${JSON.stringify(roteiro, null, 2)}</pre>
+            `;
+        }
+
+        // Função para mostrar notificações
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type === 'error' ? 'error' : ''} show`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

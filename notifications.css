@@ -1,0 +1,120 @@
+/* Container de notificações */
+#notifications-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Notificação */
+.notification {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 300px;
+    max-width: 400px;
+    animation: slideIn 0.3s ease-out;
+    transition: all 0.3s ease;
+}
+
+.notification.hiding {
+    animation: slideOut 0.3s ease-out forwards;
+}
+
+/* Tipos de notificação */
+.notification.success {
+    border-left: 4px solid #2ECC71;
+}
+
+.notification.error {
+    border-left: 4px solid #e74c3c;
+}
+
+.notification.info {
+    border-left: 4px solid #3498db;
+}
+
+.notification.warning {
+    border-left: 4px solid #f1c40f;
+}
+
+/* Ícone da notificação */
+.notification-icon {
+    font-size: 1.25rem;
+}
+
+.notification.success .notification-icon {
+    color: #2ECC71;
+}
+
+.notification.error .notification-icon {
+    color: #e74c3c;
+}
+
+.notification.info .notification-icon {
+    color: #3498db;
+}
+
+.notification.warning .notification-icon {
+    color: #f1c40f;
+}
+
+/* Conteúdo da notificação */
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.25rem;
+}
+
+.notification-message {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Botão de fechar */
+.notification-close {
+    color: #95a5a6;
+    cursor: pointer;
+    font-size: 1.25rem;
+    padding: 0.25rem;
+    transition: color 0.3s;
+}
+
+.notification-close:hover {
+    color: #7f8c8d;
+}
+
+/* Animações */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+} 

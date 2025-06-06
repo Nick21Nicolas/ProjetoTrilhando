@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Trilhando</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sobre.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="Captura_de_tela_2025-05-28_090600-removebg-preview.png" alt="Logo Trilhando">
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="destinos.html">Destinos</a></li>
+                <li><a href="roteiro.html">Roteiro</a></li>
+                <li><a href="sobre.html" class="active">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="sobre-container">
+        <section class="sobre-content animate__animated animate__fadeIn">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <!-- Substitua o src pela URL da sua logo -->
+                    <img src="Captura_de_tela_2025-05-28_090600-removebg-preview.png" alt="Logo Trilhando" class="animate__animated animate__pulse animate__infinite">
+                </div>
+            </div>
+
+            <h2 class="animate__animated animate__fadeInDown">Sobre o Projeto</h2>
+            
+            <div class="sobre-texto animate__animated animate__fadeInUp">
+                <p>O Trilhando é uma plataforma colaborativa que nasceu da paixão por viagens e da vontade de compartilhar experiências incríveis pelo Brasil. Nossa missão é conectar viajantes e destinos, tornando cada jornada única e memorável.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h4>Descubra Destinos</h4>
+                        <p>Explore os melhores lugares do Brasil</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-route"></i>
+                        <h4>Crie Roteiros</h4>
+                        <p>Planeje suas viagens de forma inteligente</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-star"></i>
+                        <h4>Avalie Lugares</h4>
+                        <p>Compartilhe suas experiências</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <h4>Comunidade</h4>
+                        <p>Conecte-se com outros viajantes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tecnologias animate__animated animate__fadeInUp">
+                <h3>Tecnologias Utilizadas</h3>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <i class="fab fa-html5"></i>
+                        <span>HTML5</span>
+                        <div class="tech-description">Estruturação moderna e semântica</div>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-css3-alt"></i>
+                        <span>CSS3</span>
+                        <div class="tech-description">Estilização avançada e animações</div>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-js"></i>
+                        <span>JavaScript</span>
+                        <div class="tech-description">Interatividade e dinamismo</div>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-database"></i>
+                        <span>LocalStorage</span>
+                        <div class="tech-description">Armazenamento local seguro</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipe animate__animated animate__fadeInUp">
+                <h3>Nossa Equipe</h3>
+                <div class="membros-grid">
+                    <div class="membro">
+                        <div class="membro-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="membro-info">
+                            <h4>Priole e Nathan</h4>
+                            <p>Desenvolvedores Full Stack</p>
+                            <div class="membro-social">
+                                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Adicione mais membros conforme necessário -->
+                </div>
+            </div>
+
+           
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Trilhando - Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        // Adiciona classes de animação conforme o scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-item, .tech-item, .membro').forEach((el) => observer.observe(el));
+    </script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 200
+        });
+    </script>
+    <script src="notifications.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html> 

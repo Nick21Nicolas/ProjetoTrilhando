@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Destino - Trilhando</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="adicionar-destino.css">
+    <link rel="stylesheet" href="notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="Captura_de_tela_2025-05-28_090600-removebg-preview.png" alt="Logo Trilhando">
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="destinos.html" class="active">Destinos</a></li>
+                <li><a href="roteiro.html">Roteiro</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="adicionar-container">
+        <div class="form-container">
+            <h2>Adicionar Novo Destino</h2>
+            <form id="form-destino" class="form-destino">
+                <div class="form-grupo">
+                    <label for="nome">Nome do Local</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado" required>
+                        <option value="">Selecione um estado</option>
+                        <option value="Acre">Acre</option>
+                        <option value="Alagoas">Alagoas</option>
+                        <option value="Amapá">Amapá</option>
+                        <option value="Amazonas">Amazonas</option>
+                        <option value="Bahia">Bahia</option>
+                        <option value="Ceará">Ceará</option>
+                        <option value="Distrito Federal">Distrito Federal</option>
+                        <option value="Espírito Santo">Espírito Santo</option>
+                        <option value="Goiás">Goiás</option>
+                        <option value="Maranhão">Maranhão</option>
+                        <option value="Mato Grosso">Mato Grosso</option>
+                        <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                        <option value="Minas Gerais">Minas Gerais</option>
+                        <option value="Pará">Pará</option>
+                        <option value="Paraíba">Paraíba</option>
+                        <option value="Paraná">Paraná</option>
+                        <option value="Pernambuco">Pernambuco</option>
+                        <option value="Piauí">Piauí</option>
+                        <option value="Rio de Janeiro">Rio de Janeiro</option>
+                        <option value="Rio Grande do Norte">Rio Grande do Norte</option>
+                        <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                        <option value="Rondônia">Rondônia</option>
+                        <option value="Roraima">Roraima</option>
+                        <option value="Santa Catarina">Santa Catarina</option>
+                        <option value="São Paulo">São Paulo</option>
+                        <option value="Sergipe">Sergipe</option>
+                        <option value="Tocantins">Tocantins</option>
+                    </select>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="tipo">Tipo de Lugar</label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Selecione um tipo</option>
+                        <option value="Praia">Praia</option>
+                        <option value="Montanha">Montanha</option>
+                        <option value="Cidade Histórica">Cidade Histórica</option>
+                        <option value="Parque Nacional">Parque Nacional</option>
+                        <option value="Ecoturismo">Ecoturismo</option>
+                        <option value="Cidade Grande">Cidade Grande</option>
+                        <option value="Rural">Rural</option>
+                        <option value="Ilha">Ilha</option>
+                    </select>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="nota">Nota (1 a 5)</label>
+                    <div class="nota-container">
+                        <input type="range" id="nota" name="nota" min="1" max="5" step="0.5" value="5">
+                        <span id="nota-valor">5.0</span>
+                    </div>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" rows="4" required></textarea>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="custo">Custo Estimado (R$)</label>
+                    <input type="number" id="custo" name="custo" min="0" step="0.01" required
+                           placeholder="Ex: 1500.00">
+                </div>
+
+                <div class="form-grupo">
+                    <label for="imagens">Links das Imagens (uma por linha)</label>
+                    <textarea id="imagens" name="imagens" rows="4" required
+                              placeholder="https://exemplo.com/imagem1.jpg&#10;https://exemplo.com/imagem2.jpg"></textarea>
+                </div>
+
+                <div class="form-acoes">
+                    <button type="button" class="btn-secundario" onclick="window.history.back()">Cancelar</button>
+                    <button type="submit" class="btn-primario">Adicionar Destino</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div id="notifications-container">
+        <!-- Notificações serão inseridas via JavaScript -->
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Trilhando - Todos os direitos reservados</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 200
+        });
+    </script>
+    <script src="notifications.js"></script>
+    <script src="menu.js"></script>
+    <script src="adicionar-destino.js"></script>
+</body>
+</html> 

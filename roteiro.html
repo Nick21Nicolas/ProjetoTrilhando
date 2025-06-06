@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Roteiro - Trilhando</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="roteiro.css">
+    <link rel="stylesheet" href="notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="Captura_de_tela_2025-05-28_090600-removebg-preview.png" alt="Logo Trilhando">
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="destinos.html">Destinos</a></li>
+                <li><a href="roteiro.html" class="active">Roteiro</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="roteiro-container">
+        <div class="roteiro-header">
+            <div class="roteiro-info">
+                <h1>Meu Roteiro de Viagem</h1>
+                <span id="total-destinos">0 destinos planejados</span>
+            </div>
+            <div class="roteiro-acoes">
+                <button id="limpar-roteiro" class="btn-secundario">
+                    <i class="fas fa-trash"></i> Limpar Roteiro
+                </button>
+                <button id="exportar-pdf" class="btn-primario">
+                    <i class="fas fa-file-pdf"></i> Exportar PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="roteiro-timeline">
+            <!-- Destinos serão inseridos aqui via JavaScript -->
+        </div>
+
+        <div class="roteiro-resumo">
+            <div class="resumo-card">
+                <div class="resumo-header">
+                    <h2>Resumo do Roteiro</h2>
+                </div>
+                <div class="resumo-content">
+                    <div class="resumo-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="resumo-info">
+                            <span class="info-label">Total de Destinos</span>
+                            <span id="total-destinos-resumo" class="info-value">0</span>
+                        </div>
+                    </div>
+                    <div class="resumo-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div class="resumo-info">
+                            <span class="info-label">Duração Total</span>
+                            <span id="duracao-total" class="info-value">0 dias</span>
+                        </div>
+                    </div>
+                    <div class="resumo-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div class="resumo-info">
+                            <span class="info-label">Custo Total Estimado</span>
+                            <span id="custo-total" class="info-value">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dicas-card">
+                <div class="dicas-header">
+                    <h2>Dicas de Viagem</h2>
+                </div>
+                <div class="dicas-content">
+                    <div class="dica-item">
+                        <i class="fas fa-clock"></i>
+                        <p>Planeje com antecedência! Reserve hotéis e passagens com pelo menos 3 meses de antecedência.</p>
+                    </div>
+                    <div class="dica-item">
+                        <i class="fas fa-umbrella-beach"></i>
+                        <p>Verifique a previsão do tempo e a melhor época para visitar cada destino.</p>
+                    </div>
+                    <div class="dica-item">
+                        <i class="fas fa-passport"></i>
+                        <p>Mantenha seus documentos organizados e faça cópias de segurança.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modal-container">
+        <!-- Modal será inserido via JavaScript -->
+    </div>
+
+    <div id="notifications-container">
+        <!-- Notificações serão inseridas via JavaScript -->
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Trilhando - Todos os direitos reservados</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 200
+        });
+    </script>
+    <script src="notifications.js"></script>
+    <script src="menu.js"></script>
+    <script src="roteiro.js"></script>
+</body>
+</html>
